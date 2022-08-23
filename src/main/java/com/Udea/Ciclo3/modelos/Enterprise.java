@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table (name="Empresa")
-public class Empresa {
+public class Enterprise {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,10 +14,10 @@ public class Empresa {
     private String telefono;
     private String NIT;
 
-    public Empresa() {
+    public Enterprise() {
     }
 
-    public Empresa(String nombre, String direccion, String telefono, String NIT) {
+    public Enterprise(String nombre, String direccion, String telefono, String NIT) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;

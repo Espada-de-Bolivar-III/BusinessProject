@@ -1,5 +1,5 @@
 package com.Udea.Ciclo3.modelos;
 
-public class MovimientoDinero {
+public class Transaction {
 
 }

@@ -1,6 +1,6 @@
 package com.Udea.Ciclo3;
 
-import com.Udea.Ciclo3.modelos.Empresa;
+import com.Udea.Ciclo3.modelos.Enterprise;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -18,7 +18,7 @@ public class Ciclo3Application {
 
 	@GetMapping ("/test")
 	public String test(){
-		Empresa emp = new Empresa("Espada De Bolivar","calle 48 a sur n 88C", "7774678" , "122548965-3");
+		Enterprise emp = new Enterprise("Espada De Bolivar","calle 48 a sur n 88C", "7774678" , "122548965-3");
 		emp.setNombre("Espada de Bolivar Ltda");
 
 		System.out.println("Aqui ya se creo la empresa y se renombro");
