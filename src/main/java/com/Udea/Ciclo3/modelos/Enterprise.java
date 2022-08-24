@@ -5,24 +5,30 @@ import javax.persistence.*;
 @Entity
 @Table (name="Empresa")
 public class Enterprise {
-
-    @Id
+    //el Id permite generar el identificador para el PK de la base de datos en postgresSQL
+    @Id 
+    //generatedValue permite generar la estrategia para actualizar en la DB
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    
     private String nombre;
     private String direccion;
     private String telefono;
     private String NIT;
 
+    //constructor vacio
     public Enterprise() {
     }
-
+    
+    //constructor
     public Enterprise(String nombre, String direccion, String telefono, String NIT) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
         this.NIT = NIT;
     }
+    
+    //Getters and setters
 
     public int getId() {
         return id;
