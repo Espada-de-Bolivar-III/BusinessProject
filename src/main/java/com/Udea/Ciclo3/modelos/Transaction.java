@@ -2,6 +2,7 @@ package com.Udea.Ciclo3.modelos;
 
 import javax.persistence.*;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
 @Table(name = "transaction")
@@ -11,10 +12,10 @@ public class Transaction {
     private long Id;
     private float amount;
     private String concept;
-    private String updateAt;
-    private String createdAt;
+    private Date updateAt;
+    private Date createdAt;
 
-    private String user; // Hay que modificarlo porque debe hacer llamado a una Clase
+    private Employee user;
     private Enterprise enterprise;
 
 
