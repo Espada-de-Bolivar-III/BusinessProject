@@ -28,5 +28,21 @@ public class TransactionService {
         return mov;
     }
 
+    public boolean deleteTransaction(Long id){
+        transactionRepository.deleteById(id);
+        if (this.transactionRepository.findById(id).isPresent()){
+            return false;
+        }
+        return true;
+    }
+
+    public ArrayList<Transaction> getByEmployee(Long id){
+        return transactionRepository.findByEmployeeId(id);
+    }
+
+    public ArrayList<Transaction> getByEnterprise(Long id){
+        return transactionRepository.findByEnterpriseId(id);
+    }
+
 
 }
