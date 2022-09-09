@@ -1,7 +1,9 @@
-package com.BussinessProject.udea.repository;
+package com.Udea.Ciclo3.repository;
 
-import com.BussinessProject.udea.modelos.Enterprise;
+
+import com.Udea.Ciclo3.modelos.Enterprise;
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import org.springframework.stereotype.Repository;
 
 @Repository//Anotación que le dice a Spring que esta clase es un repositorio

@@ -1,7 +1,7 @@
-package com.BussinessProject.udea.services;
+package com.Udea.Ciclo3.services;
 
-import com.BussinessProject.udea.modelos.Enterprise;
-import com.BussinessProject.udea.repository.EnterpriseRepository;
+import com.Udea.Ciclo3.modelos.Enterprise;
+import com.Udea.Ciclo3.repository.EnterpriseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
