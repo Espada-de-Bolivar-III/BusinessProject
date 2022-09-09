@@ -1,7 +1,7 @@
-package com.BussinessProject.udea.controller;
+package com.Udea.Ciclo3.controller;
 
-import com.BussinessProject.udea.modelos.Enterprise;
-import com.BussinessProject.udea.services.EnterpriseService;
+import com.Udea.Ciclo3.modelos.Enterprise;
+import com.Udea.Ciclo3.services.EnterpriseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

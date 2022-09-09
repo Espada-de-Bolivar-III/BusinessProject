@@ -1,72 +1,116 @@
 package com.Udea.Ciclo3.modelos;
 
+import org.apache.catalina.User;
+
 import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table (name="Empresa")
 public class Enterprise {
     //el Id permite generar el identificador para el PK de la base de datos en postgresSQL
-    @Id 
-    //generatedValue permite generar la estrategia para actualizar en la DB
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    
-    private String nombre;
-    private String direccion;
-    private String telefono;
-    private String NIT;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String document;
+    private String phone;
+    private String address;
 
-    //constructor vacio
+    private Date createdAt;
+    private Date updateAt;
+
+    //jpa
+    @OneToMany(mappedBy = "enterprise")
+    private List<Employee> employees;
+
+    @OneToMany(mappedBy = "enterprise")
+    private List<Transaction> transactions;
+
     public Enterprise() {
     }
-    
-    //constructor
-    public Enterprise(String nombre, String direccion, String telefono, String NIT) {
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.NIT = NIT;
-    }
-    
-    //Getters and setters
 
-    public int getId() {
+    public Enterprise(String name, String document, String phone, String address, Date createdAt, Date updateAt, List<Employee> employees, List<Transaction> transactions) {
+        this.name = name;
+        this.document = document;
+        this.phone = phone;
+        this.address = address;
+        this.createdAt = createdAt;
+        this.updateAt = updateAt;
+        this.employees = employees;
+        this.transactions = transactions;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getDocument() {
+        return document;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setDocument(String document) {
+        this.document = document;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getNIT() {
-        return NIT;
+    public String getAddress() {
+        return address;
     }
 
-    public void setNIT(String NIT) {
-        this.NIT = NIT;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }
