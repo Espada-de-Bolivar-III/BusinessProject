@@ -19,10 +19,10 @@ public class Ciclo3Application {
 	@GetMapping ("/test")
 	public String test(){
 		Enterprise emp = new Enterprise("Espada De Bolivar","calle 48 a sur n 88C", "7774678" , "122548965-3");
-		emp.setNombre("Espada de Bolivar Ltda");
+		emp.setName("Espada de Bolivar Ltda");
 
 		System.out.println("Aqui ya se creo la empresa y se renombro");
-		return emp.getNombre();
+		return emp.getName();
 
 	}
 
