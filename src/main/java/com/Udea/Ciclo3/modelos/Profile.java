@@ -4,7 +4,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table (name="Empresa")
+
 public class Profile {
     //el Id es el que permite generar el identificador para el PK de la base de datos en (postgresSQL)
     @Id
@@ -13,6 +13,7 @@ public class Profile {
     private String Id;
     private String image;
     private String phone;
+    @OneToOne
     private Employee user;
     private Date createdAt;
     private Date updateAt;

@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table (name="Empresa")
+@Table (name="enterprise")
 public class Enterprise {
     //el Id permite generar el identificador para el PK de la base de datos en postgresSQL
     @Id

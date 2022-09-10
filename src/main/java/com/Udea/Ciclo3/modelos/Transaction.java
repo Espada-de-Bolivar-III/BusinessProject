@@ -15,8 +15,9 @@ public class Transaction {
     private String concept;
     private Date updateAt;
     private Date createdAt;
-
+    @ManyToOne
     private Employee user;
+    @ManyToOne
     private Enterprise enterprise;
     //constructor
 
