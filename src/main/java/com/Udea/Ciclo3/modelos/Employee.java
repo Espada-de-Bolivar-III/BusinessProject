@@ -10,10 +10,12 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
     private String email;
     private Enum_RoleName rol;
     private String updateAt;
     private String createdAt;
+
 
 
 
@@ -24,17 +26,24 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "enterprise_id")
     private Enterprise enterprise;
+    private String password;
+
+    private Boolean estado;
+
 
     public Employee() {
     }
 
-    public Employee(String email, Enum_RoleName rol, String updateAt, String createdAt, Transaction transactions, Enterprise enterprise) {
+    public Employee(String name, String email, Enum_RoleName rol, String updateAt, String createdAt, Transaction transactions, Enterprise enterprise, String password, boolean estado) {
+        this.name =name;
         this.email = email;
         this.rol = rol;
         this.updateAt = updateAt;
         this.createdAt = createdAt;
         this.transaction = transaction;
         this.enterprise = enterprise;
+        this.password = password;
+        this.estado = estado;
     }
 
     public Long getId() {
@@ -43,6 +52,14 @@ public class Employee {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -93,5 +110,19 @@ public class Employee {
         this.transaction = transaction;
     }
 
+    public String getPassword() {
+        return password;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
 }

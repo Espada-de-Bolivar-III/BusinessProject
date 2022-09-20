@@ -11,11 +11,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
     @Autowired
     EmployeeRepository employeeRepository;
+    //1. Metodo para ver todos los empleados registrados
 
     public List<Employee> getAllEmployee(){
         List<Employee> employeeList = new ArrayList<>();
@@ -24,22 +26,31 @@ public class EmployeeService {
 
     }
 
-    public Employee getEmployeeById(Long id) {
-        return employeeRepository.findById(id).get();
+    //2. metodo para buscar empleados por ID
+
+    public Optional<Employee>getEmployeebyId(Long id){
+        return employeeRepository.findById(id);
+
     }
 
-    public Employee saveOrUpdateEmployee(Employee employee){
-        Employee user = employeeRepository.save(employee);
-        return user;
+    //3. Metodo para buscar empleados por empresa
+
+    public ArrayList<Employee> obtenerPorEmpresa(Long id){
+        return employeeRepository.findByEnterpriseId(id);
     }
 
-    public Employee saveOrUpdateEmpresa(Employee employee) {
-        Employee user = employeeRepository.save(employee);
-        return user;
-    }
 
-    //metodo para eliminar empresas registradas
-    // servicio para eliminar empresas modificado de la clase :D
+    //4.Metodo para guardar o actualizar registros en Empleados
+
+    public boolean saveOrUpdateEmpleado(Employee empl){
+        Employee emp =employeeRepository.save(empl);
+        if (employeeRepository.findById(emp.getId())!=null){
+            return true;
+        }
+        return false;
+    }
+    //5. Metodo para eliminar un registro de Empleado por ID
+
     public boolean deleteEmployee(Long id){
         employeeRepository.deleteById(id);
         if(this.employeeRepository.findById(id).isPresent()){
@@ -48,9 +59,5 @@ public class EmployeeService {
         return true;
     }
 
-    //Metodo para buscar empleados por empresa
-    //Metodo para consultar empresas por id
-    public ArrayList<Employee> getByEnterprise(Long id) {
-        return employeeRepository.findByEnterpriseId(id);
-    }
+
 }
