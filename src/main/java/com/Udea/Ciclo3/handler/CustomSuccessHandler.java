@@ -1,5 +1,5 @@
 package com.Udea.Ciclo3.handler;
-
+/*
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -69,3 +69,4 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         return false;
     }
 }
+*/ //lo comente solo pa ver el otro no me reconoce el template

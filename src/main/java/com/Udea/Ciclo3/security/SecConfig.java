@@ -1,6 +1,6 @@
 package com.Udea.Ciclo3.security;
 
-
+/*
 import com.Udea.Ciclo3.handler.CustomSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -48,3 +48,4 @@ public class SecConfig extends WebSecurityConfigurerAdapter {
 
     }
 }
+*/

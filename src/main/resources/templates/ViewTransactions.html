@@ -1,10 +1,138 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>View Transactions</title>
+    <link rel="icon" href="https://img.freepik.com/vector-gratis/hacker-que-opera-ilustracion-icono-historieta-ordenador-portatil-concepto-icono-tecnologia-aislado-estilo-dibujos-animados-plana_138676-2387.jpg?w=2000">
+    <title>Lista de Transaciones</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <style>
+        a{
+        color:white;
+        }
+        a:hover {
+        color: black;
+        text-decoration:none;
+        }
+        p{
+            font-family: Arial;
+            font-size: 16px;
+            color: black;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
+
+<div class="container">
+    <!--<p th:inline="text" class="text-right">Bienvenido: [[${#httpServletRequest.remoteUser}]]</p>-->
+    <p th:inline="text" class="text-right">Bienvenido: Pepito Perez</p>
+    <p th:inline="text" class="text-right">Rol Actual: Administador</p>
+    <button type="button" class="btn btn-danger" style="float:right"><a th:href="@{/logout}">Cerrar Sesión</a></button>
+    <nav>
+        <center>
+            <img src="https://img.freepik.com/vector-gratis/hacker-que-opera-ilustracion-icono-historieta-ordenador-portatil-concepto-icono-tecnologia-aislado-estilo-dibujos-animados-plana_138676-2387.jpg?w=2000"
+                 width="140" height="140" alt="">
+        </center>
+    </nav>
+
+    <h3> Lista de Transaciones</h3>
+    <!--Dibujamos la tabla-->
+    <br><table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th class="text-right">Valor</th>
+        <th>Concepto</th>
+        <th>Empleado Responsable</th>
+        <th>Empresa Responsable</th>
+        <th>Fecha de Transacion</th>
+        <th>Editar</th>
+        <th>Eliminar</th>
+    </tr>
+
+    <!--Llenamos la tabla dibujada-->
+    <!--En nuestro controller, creamos en viewTransaction un modelo con un atributo llamado movlist donde esta guardada la lista de todos los movimientos-->
+    <tr th:each="Transaction : ${movlist}">
+        <td th:text="${Transaction.id}"></td>
+        <td class="text-right" th:text="${#numbers.formatCurrency(Transaction.amount)}">$1`200.000</td>
+        <td th:if="${Transaction.concept=='1'}">Papeleria</td>
+        <!--<td th:if="${Transaction.concept=='2'}">Servicios Publicos/privados</td>-->
+        <!--<td th:if="${Transaction.concept=='3'}">Operativos</td>-->
+        <!--<td th:if="${Transaction.concept=='4'}">Caja Menor</td>-->
+        <!--<td th:if="${Transaction.concept=='5'}">Tributario</td>-->
+        <!--<td th:if="${Transaction.concept=='6'}">Mobiliario</td>-->
+        <!--<td th:if="${Transaction.concept=='7'}">Maquinaria y Equipo</td>-->
+        <!--<td th:if="${Transaction.concept=='8'}">Nomina</td>-->
+        <td th:text="${Transaction.user.name}">Jabier Marquez</td>
+        <td th:text="${Transaction.enterprise.name}">Desarrollo S.A</td>
+        <td th:text="${#dates.format(Transaction.fecha, 'dd/MM/yyyy')}">05/15/2012</td>
+        <td><button type="button" class="btn btn-warning"><a th:href="@{/EditTransaction/{id}(id=${Transaction.id})}">Editar</a></button></td>
+        <td><button type="button" class="btn btn-danger"><a th:href="@{/DeleteTransaction/{id}(id=${Transaction.id})}">Eliminar</a></button></td>
+    </tr>
+</table>
+
+    <!-- CAMPO PARA EL AREA DE NAVEGACION -->
+    <!--<nav aria-label="Ejemplo navegacion">
+        <ul class="pagination mt-4">
+            <li th:class="${paginaActual==estado.index} ? 'active' : '' " th:each="pagina, estado: ${paginas}" class="page-item">
+                <a th:href="@{/VerMovimientos/(pagina=${estado.index})}" class="page-link" th:text="${estado.index}+1">Atras</a>
+            </li>
+        </ul>
+    </nav>-->
+
+
+
+    <!-- Campo para ver la suma de TODOS LOS TRASACIONES FILTRADOS -->
+    <div class="row">
+        <div class="form-group col-md-12">
+            <label class="col-md-3" for="SumaMontos">Total Transaciones:</label>
+            <div class="col-md-6">
+                <p th:text="${#numbers.formatCurrency(SumaMontos)}" class="form-control" id="SumaMontos"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- vamos a crear un boton que sirva para agregar nuevos Transacion -->
+    <button type="button" class="btn btn-info"><a th:href="@{/AddTransaction}">Agregar Nueva Transacion</a></button>
+    <br><br>
+    <!-- boton que me lleva a la lista de empresas -->
+    <button type="button" class="btn btn-primary"><a th:href="@{/ViewEnterprises}">Ver lista de Empresas</a></button>
+    <br><br>
+    <!-- boton que me lleva a la lista de empleados -->
+    <button type="button" class="btn btn-primary"><a th:href="@{/ViewEmployees}">Ver lista de Empleados</a></button>
+</div>
+
+<script th:inline="javascript">
+    window.onload=function(){
+
+        var msg= [[${mensaje}]];
+        if (msg == "saveOK"){
+            Command : toastr["success"]("Movimiento registrado con éxito!")
+            }
+        else if (msg == "updateOK"){
+            Command : toastr["success"]("Movimiento actualizado con éxito!")
+        }
+        else if (msg == "deleteOK"){
+            Command : toastr["error"]("Movimiento eliminado con éxito!")
+        }
+        else if (msg == "deleteError"){
+            Command : toastr["error"]("Movimiento no pudo ser eliminado!")
+        }
+        toastr.options={
+            "positionClass": "toast-top-right",
+            "showDuration":"300",
+            "showMethod":"fadeIn",
+            "hideMethod":"fadeOut",
+        }
+
+
+    }
+
+</script>
 
 </body>
 </html>

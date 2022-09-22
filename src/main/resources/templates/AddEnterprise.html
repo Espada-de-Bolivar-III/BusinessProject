@@ -1,10 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Add Enterprise</title>
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQM6exOGMYYRNMuybNXmRAXuLG7XaSnTaTNgvlgIeXpJw&s">
+    <title>Añadir Nueva Empresa</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        a{
+        color:white;
+        }
+        a:hover {
+        color: black;
+        text-decoration:none;
+        }
+        p{
+            font-family: Arial;
+            font-size: 16px;
+            color: black;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
+<div class="container">
+    <!--<p th:inline="text" class="text-right">Bienvenido: [[${#httpServletRequest.remoteUser}]]</p>-->
+    <p th:inline="text" class="text-right">Bienvenido: Pepito Perez</p>
+    <p th:inline="text" class="text-right">Rol Actual: Administador</p>
+    <button type="button" class="btn btn-danger" style="float:right"><a th:href="@{/logout}">Cerrar Sesión</a></button>
+
+    <nav >
+        <center>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQM6exOGMYYRNMuybNXmRAXuLG7XaSnTaTNgvlgIeXpJw&s"
+                 width="140" height="140" alt="">
+        </center>
+    </nav>
+    <h3> Añadir los datos de la empresa</h3>
+    <br>
+    <!--Crear formulario para llenar los datos de la empresa y guardarlo en el objeto emp -->
+    <form th:action="@{/ToUpdateEnterprise}" th:object="${emp}" method="post">
+        <!--Campo para nombre-->
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="col-md-3" for="name">Nombre de la Empresa:</label>
+                <div class="col-md-6">
+                    <input type="text" th:field="*{name}" class="form-control" id="name" required="required"></div>
+            </div>
+        </div>
+        <!--Campo para documento-->
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="col-md-3" for="document">Documento de la Empresa:</label>
+                <div class="col-md-6">
+                    <input type="text" th:field="*{document}" class="form-control" id="document" required="required"></div>
+            </div>
+        </div>
+        <!--Campo para celular-->
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="col-md-3" for="phone">Celular de la Empresa:</label>
+                <div class="col-md-6">
+                    <input type="text" th:field="*{phone}" class="form-control" id="phone" required="required"></div>
+            </div>
+        </div>
+        <!--Campo para direccion-->
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="col-md-3" for="address">Direccion de la Empresa:</label>
+                <div class="col-md-6">
+                    <input type="text" th:field="*{address}" class="form-control" id="address" required="required"></div>
+            </div>
+        </div>
+        <!--Boton para enviar todo y ejecutar accion -->
+        <div class="row">
+            <div class="col-md-2">
+                <button class="btn btn-success">Crear Empresa</button>
+            </div>
+        </div>
+
+    </form>
+
+    <br>
+    <a href="javascript: history.go(-1)" class="btn btn-info" role="button">Atrás</a>
+
+</div>
 </body>
 </html>
