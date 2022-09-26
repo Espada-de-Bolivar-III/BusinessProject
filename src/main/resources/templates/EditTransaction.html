@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="icon" href="https://img.freepik.com/vector-gratis/hacker-que-opera-ilustracion-icono-historieta-ordenador-portatil-concepto-icono-tecnologia-aislado-estilo-dibujos-animados-plana_138676-2387.jpg?w=2000">
-    <title>Editar datos de Transacion</title>
+    <title>Editar datos de la Transaccion</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -16,21 +16,16 @@
         color: black;
         text-decoration:none;
         }
-        p{
-            font-family: Arial;
-            font-size: 16px;
-            color: black;
-            font-weight: bold;
-        }
+
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!--<p th:inline="text" class="text-right">Bienvenido: [[${#httpServletRequest.remoteUser}]]</p>-->
-    <p th:inline="text" class="text-right">Bienvenido: Pepito Perez</p>
-    <p th:inline="text" class="text-right">Rol Actual: Administador</p>
+
     <button type="button" class="btn btn-danger" style="float:right"><a th:href="@{/logout}">Cerrar Sesión</a></button>
+
+    <p th:inline="text" class="text-right">User: [[${#httpServletRequest.remoteUser}]]</p>
     <nav>
         <center>
             <img src="https://img.freepik.com/vector-gratis/hacker-que-opera-ilustracion-icono-historieta-ordenador-portatil-concepto-icono-tecnologia-aislado-estilo-dibujos-animados-plana_138676-2387.jpg?w=2000"
@@ -38,14 +33,14 @@
         </center>
     </nav>
 
-    <h1> Modifique datos de Transacion</h1>
+    <h1> Modifique datos de la Transaccion</h1>
     <br>
-    <!--Crear formulario para cambiar los datos del transacion y guardarlo en el objeto mov -->
+    <!--Crear formulario para cambiar los datos de la transacion y guardarlo en el objeto mov -->
     <form th:action="@{/ToUpdateTransaction}" th:object="${mov}" method="post">
         <!--Campo para id-->
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3" for="id">ID del transacion:</label>
+                <label class="col-md-3" for="id">ID de la transaccion:</label>
                 <div class="col-md-6">
                     <input type="text" th:field="*{id}" class="form-control" id="id" required="required" readonly></div>
             </div>
@@ -54,7 +49,7 @@
         <!--Campo para Concepto-->
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3" for="concept">Concepto del Transacion:</label>
+                <label class="col-md-3" for="concept">Concepto de la Transaccion:</label>
                 <div class="col-md-6">
                     <select th:field="*{concept}" class="form-control" id="concept" required="required">
                         <option th:value=1>Papeleria</option>
@@ -74,7 +69,7 @@
         <!--Campo para monto-->
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3" for="amount">Valor del movimiento:</label>
+                <label class="col-md-3" for="amount">Valor de la Transaccion:</label>
                 <div class="col-md-6">
                     <input type="number" th:field="*{amount}" class="form-control" id="amount" required="required"></div>
             </div>
@@ -83,10 +78,12 @@
         <!--Campo para usuario-->
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3" for="user">Responsable del Transacion:</label>
+                <label class="col-md-3" for="usuario">Responsable del movimiento:</label>
                 <div class="col-md-6">
-                    <select th:field="*{user}" class="form-control" id="user" required="required" readonly>
-                        <option th:value=*{user.id} th:text=*{user.correo}></option>
+                    <select th:field="*{usuario}" class="form-control" id="usuario" required="required" readonly >
+                        <!--<option th:value="*{usuario.id} th:text=*{usuario.email}"></option>-->
+                        <option th:text="${#httpServletRequest.remoteUser}" th:value="${idEmployee}"></option>
+                        <!--<option th:text="${#httpServletRequest.remoteUser}" th:value="${#httpServletRequest.remoteUser}"></option> -->
                     </select>
                 </div>
             </div>
@@ -95,15 +92,15 @@
         <!--Campo para fecha-->
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3" for="fecha">Fecha del movimiento:</label>
+                <label class="col-md-3" for="fecha">Fecha de la transaccion:</label>
                 <div class="col-md-6">
                     <input type="date" th:field="*{fecha}" class="form-control" id="fecha" required="required" readonly></div>
             </div>
         </div>
-        <!--Boton para enviar todo y ejecutar accion -->
+        <!--Boton para enviar-->
         <div class="row">
             <div class="col-md-2">
-                <button class="btn btn-success">Actualizar Transacion</button>
+                <button class="btn btn-success">Actualizar Transaccion</button>
             </div>
         </div>
 

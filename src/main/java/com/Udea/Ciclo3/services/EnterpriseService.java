@@ -24,8 +24,8 @@ public class EnterpriseService {
 
     //2. METODO QUE ME TRAE UN OBJETO DE TIPO EMPRESA CUANDO CUENTA CON EL ID DE LA MISMA
     //se usa metodo optional para retornar la empresa
-    public Enterprise getEmpresaById(Long id) {
-        return empresaRepository.findById(id).get();
+    public Optional<Enterprise> getEmpresaById(Long id) {
+        return empresaRepository.findById(id);
     }
 
     //3. metodo para guardar o actualizar objetos de tipo empresa

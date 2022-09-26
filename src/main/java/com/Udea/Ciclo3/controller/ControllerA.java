@@ -1,26 +1,28 @@
 package com.Udea.Ciclo3.controller;
 
-import com.Udea.Ciclo3.modelos.Employee;
-import com.Udea.Ciclo3.modelos.Enterprise;
-import com.Udea.Ciclo3.modelos.Profile;
-import com.Udea.Ciclo3.modelos.Transaction;
+import com.Udea.Ciclo3.modelos.*;
 import com.Udea.Ciclo3.repository.TransactionRepository;
 import com.Udea.Ciclo3.services.EmployeeService;
 import com.Udea.Ciclo3.services.EnterpriseService;
 import com.Udea.Ciclo3.services.ProfileService;
 import com.Udea.Ciclo3.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -36,8 +38,7 @@ public class ControllerA {
     ProfileService profileService;
     @Autowired
     EmployeeService employeeService;
-    @Autowired
-    TransactionRepository transactionRepository;
+
 
 
     //EMPRESAS
@@ -70,7 +71,7 @@ public class ControllerA {
 
     @GetMapping("/EditEnterprise/{id}")
     public String EditarEmpresa(Model model, @PathVariable Long id, @ModelAttribute("mensaje") String mensaje) {
-        Enterprise emp = empresaService.getEmpresaById(id);
+        Enterprise emp = empresaService.getEmpresaById(id).get();
         //creamos el atributo para el modelo que se llame igualmente emp y es el que ira al HTML para llenar o alimentar campos
         model.addAttribute("emp", emp);
         model.addAttribute("mensaje", mensaje);
@@ -100,15 +101,16 @@ public class ControllerA {
 
     //Empleados
 
-    @GetMapping("ViewEmployees")
+    @GetMapping("/ViewEmployees")
     public String VerEmpleados(Model model, @ModelAttribute("mensaje") String mensaje) {
         List<Employee> listaEmpleados = employeeService.getAllEmployee();
         model.addAttribute("emplelist", listaEmpleados);
         model.addAttribute("mensaje", mensaje);
-        return "viewEmployees"; //llamamos al HTML
+        return "ViewEmployees"; //llamamos al HTML
     }
 
-    @GetMapping("AddEmployee")
+
+    @GetMapping("/AddEmployee")
     public String NuevoEmpleado(Model model, @ModelAttribute("mensaje") String mensaje) {
         Employee empl = new Employee();
         model.addAttribute("empl", empl);
@@ -118,10 +120,11 @@ public class ControllerA {
         return "AddEmployee";//llamar al HTMl
     }
 
+
     @PostMapping("/SaveEmployee")
     public String GuardarEmpleado(Employee empl, RedirectAttributes redirectAttributes) {
-        //String passEncriptada = passwordEncoder().encode(empl.getPassword());
-        //empl.setPassword(passEncriptada);
+        String passEncriptada = passwordEncoder().encode(empl.getPassword());
+        empl.setPassword(passEncriptada);
 
         if (employeeService.saveOrUpdateEmpleado(empl) == true) {
             redirectAttributes.addFlashAttribute("mensaje", "saveOK");
@@ -138,16 +141,17 @@ public class ControllerA {
         model.addAttribute("empl", empl);
         model.addAttribute("mensaje", mensaje);
         List<Enterprise> listaEmpresas = empresaService.getALLEmpresas();
+        model.addAttribute("emprelist", listaEmpresas);
         return "EditEmployee";
     }
 
     @PostMapping("/ToUpdateEmployee")
     public String ActualizarEmpleado(@ModelAttribute("empl") Employee empl, RedirectAttributes redirectAttributes) {
         Long id = empl.getId();//sacamos el id del objeto empl
-        String OldPass = employeeService.getEmployeebyId(id).get().getPassword();//con ese id consultamos la contraseña que ya esta en la base
-        if (!empl.getPassword().equals(OldPass)) {
-            //String passEncriptada = passwordEncoder().encode(empl.getPassword());
-            //empl.setPassword(passEncriptada);
+        String OldPass = employeeService.getEmployeebyId(id).get().getPassword();//con ese id consultamos la contraseña que ya esta en la base de datos
+        if (!empl.getPassword().equals(OldPass)) { //si las constraseñas son diferentes actualiza sino dejar igual
+            String passEncriptada = passwordEncoder().encode(empl.getPassword()); //compara la contraseña del empleado en la BD
+            empl.setPassword(passEncriptada);
         }
         if (employeeService.saveOrUpdateEmpleado(empl)) {
             redirectAttributes.addFlashAttribute("mensaje", "updateOK");
@@ -161,13 +165,14 @@ public class ControllerA {
 
     @GetMapping("DeleteEmployee/{id}")
     public String BorrarEmpleado(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        if (employeeService.deleteEmployee(id)) {
+        if (employeeService.deleteEmployee(id) == true) {
             redirectAttributes.addFlashAttribute("mensaje", "deleteOk");
-            return "redirect:/ViewEmployee";
+            return "redirect:/ViewEmployees";
         }
         redirectAttributes.addFlashAttribute("mensaje", "deleteError");
         return "redirect:/ViewEmployees";
     }
+
 
     @GetMapping("/Enterprise/{id}/Employees")//filtrar los empleados por empresa
     public String VerEmpleadosPorEmpresa(@PathVariable("id") Long id, Model model) {
@@ -179,36 +184,49 @@ public class ControllerA {
     //Movimientos
 
     @RequestMapping("/ViewTransactions")//controlador que nos lleva al template donde veremos todos los movimientos
-    public String VerTransacciones(@RequestParam(value = "pagina", required = false, defaultValue = "1") int NumeroPagina,
-                                   @RequestParam(value = "medida", required = false, defaultValue = "5") int medida,
+    public String VerTransacciones(//@RequestParam(value = "pagina", required = false, defaultValue = "1") int NumeroPagina,
+                                   //@RequestParam(value = "medida", required = false, defaultValue = "5") int medida,
                                    Model model, @ModelAttribute("mensaje") String mensaje) {
-        Page<Transaction> paginaMovimientos = transactionRepository.findAll(PageRequest.of(NumeroPagina, medida));
-        model.addAttribute("movlist", paginaMovimientos.getContent());
-        model.addAttribute("paginas", new int[paginaMovimientos.getTotalPages()]);
-        model.addAttribute("paginaActual", NumeroPagina);
+        List<Transaction> listaMovimientos= transactionService.getAllTransactions(); //Page<Transaction> paginaMovimientos = transactionRepository.findAll(PageRequest.of(NumeroPagina, medida));
+        model.addAttribute("movlist", listaMovimientos);
         model.addAttribute("mensaje", mensaje);
+        //Long sumaMonto = transactionService.MontosPorEmpleado(transactionService.MontosPorEmpleado(long id));
+        //System.out.println("Sumas empleado******* " + sumaMonto);
+        //model.addAttribute("SumaMontos", sumaMonto);
         Long sumaMonto = transactionService.ObtenerSumaMontos();
         model.addAttribute("sumaMontos", sumaMonto);//mandamos la suma de montos a la plantilla
         return "ViewTransactions";//llamamos al HTML
-
-
     }
+
+
 
     @GetMapping("/AddTransaction")//controlador que nos lleva al template donde podremos crear un nuevo movimiento
     public String NuevaTransaccion(Model model, @ModelAttribute("mensaje") String mensaje) {
         Transaction movimiento = new Transaction();
         model.addAttribute("mov", movimiento);
         model.addAttribute("mensaje", mensaje);
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //conseguir el correo para alimentar user
         String email = auth.getName();
-        Long idEmployee = transactionService.IdPorCorreo(email);
-        model.addAttribute("idEmpleado", idEmployee);
+        //Integer idEmployee = transactionService.IdPorCorreo(email);
+        //model.addAttribute("idEmployee", idEmployee);
         return "AddTransaction";//llamar al HTML
     }
 
+
     @PostMapping("/SaveTransaction")
-    public String GuardarTransaccion(Transaction mov, RedirectAttributes redirectAttributes) {
-        if (transactionService.saveOrUpdateTransacion(mov)) {
+    public String GuardarTransaccion(TransactionVM mov, RedirectAttributes redirectAttributes) {
+        // mappear TransactionVM a Transaction
+        Transaction transaction = new Transaction();
+        transaction.setAmount(mov.getAmount());
+        transaction.setConcept(mov.getConcept());
+        transaction.setFecha(mov.getFecha());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //conseguir el correo para alimentar user
+        String email = auth.getName();
+        Employee employee = employeeService.getEmployeebyEmail(email);
+        transaction.setUsuario(employee);
+        transaction.setEnterprise(employee.getEnterprise());
+
+        if (transactionService.saveOrUpdateTransacion(transaction)) {
             redirectAttributes.addFlashAttribute("mensaje", "saveOK");
             return "redirect:/ViewTransactions";
         }
@@ -226,10 +244,17 @@ public class ControllerA {
         model.addAttribute("emplelist", listaEmpleados);
         return "EditTransaction";
 
+
     }
 
     @PostMapping("/ToUpdateTransaction")
     public String ActualizarTransaccion(@ModelAttribute("mov") Transaction mov, RedirectAttributes redirectAttributes) {
+        // Cambiar Transaction por TransacionVM
+        // Buscar usuario y setear a transacion usuario y empresa
+        // Copiarse del codigo de crear transaccion.
+        // Revisar el template de Edit transaccion, que se parezca a lo de crear transaccion
+
+        //Luego si va esto
         if (transactionService.saveOrUpdateTransacion(mov)) {
             redirectAttributes.addFlashAttribute("mensaje", "updateOK");
             return "redirect:/ViewTransactions";
@@ -256,6 +281,7 @@ public class ControllerA {
         List<Transaction> movlist = transactionService.getByEmployee(id);
         model.addAttribute("movlist", movlist);
         Long sumaMonto = transactionService.MontosPorEmpleado(id);
+        System.out.println("Sumas empleado******* " + sumaMonto);
         model.addAttribute("SumaMontos", sumaMonto);
         return "ViewTransactions"; //llamamos al HTML
     }
@@ -265,8 +291,8 @@ public class ControllerA {
         List<Transaction> movlist = transactionService.getByEnterprise(id);
         model.addAttribute("movlist", movlist);
         Long sumaMonto = transactionService.MontosPorEmpresa(id);
-        model.addAttribute("SumaMOntos", sumaMonto);
-        return "ViewTransactions";//llamamo al HTML
+        model.addAttribute("SumaMontos", sumaMonto);
+        return "ViewTransactions";//llamamos al HTML
     }
 
     //controlador que me lleva al template de no autorizado
@@ -324,10 +350,11 @@ public class ControllerA {
     }
 
     //Metodo para encriptar contraseñas en spring boot mediante paswordEncoder
-    //@Bean
-    //public PasswordEncoder passwordEncoder() {
-        //return new BCryptPasswordEncoder();
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
+}
 
 
 

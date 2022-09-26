@@ -13,7 +13,7 @@ public class Ciclo3Application  {
 
 	@GetMapping ("/hello")
 	public String hello(){
-		return "Hola Ciclo 3... Saldremos vivos de esto!";
+		return "Hola Ciclo 3!";
 	}
 
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQM6exOGMYYRNMuybNXmRAXuLG7XaSnTaTNgvlgIeXpJw&s">
     <title>Lista de Empresas</title>
@@ -10,6 +11,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
     <style>
         a{
         color:white;
@@ -28,9 +31,10 @@
 </head>
 <body>
 <div class="container">
-    <!--<p th:inline="text" class="text-right">Bienvenido: [[${#httpServletRequest.remoteUser}]]</p>-->
-    <p th:inline="text" class="text-right">Bienvenido: Pepito Perez</p>
-    <p th:inline="text" class="text-right">Rol Actual: Administador</p>
+
+
+
+    <p th:inline="text" class="text-right">User:[[${#httpServletRequest.remoteUser}]]</p> <!--ver quien esta online -->
     <button type="button" class="btn btn-danger" style="float:right"><a th:href="@{/logout}">Cerrar Sesión</a></button>
     <nav>
         <center>
@@ -62,8 +66,8 @@
         <td th:text="${enterprise.document}"></td>
         <td th:text="${enterprise.phone}"></td>
         <td th:text="${enterprise.address}"></td>
-        <td><button type="button" class="btn btn-info"><a th:href="@{/enterprise/{id}/ViewEmployees (id=${enterprise.id})}">Ver</a></button></td>
-        <td><button type="button" class="btn btn-primary"><a th:href="@{/enterprise/{id}/ViewTransactions (id=${enterprise.id})}">Ver</a></button></td>
+        <td><button type="button" class="btn btn-info"><a th:href="@{/Enterprise/{id}/Employees (id=${enterprise.id})}">Ver</a></button></td>
+        <td><button type="button" class="btn btn-primary"><a th:href="@{/Enterprise/{id}/Transactions (id=${enterprise.id})}">Ver</a></button></td>
         <td><button type="button" class="btn btn-warning"><a th:href="@{/EditEnterprise/{id}(id=${enterprise.id})}">Editar</a></button></td>
         <td><button type="button" class="btn btn-danger"><a th:href="@{/DeleteEnterprise/{id}(id=${enterprise.id})}">Eliminar</a></button></td>
     </tr>

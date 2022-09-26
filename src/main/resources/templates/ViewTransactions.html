@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <link rel="icon" href="https://img.freepik.com/vector-gratis/hacker-que-opera-ilustracion-icono-historieta-ordenador-portatil-concepto-icono-tecnologia-aislado-estilo-dibujos-animados-plana_138676-2387.jpg?w=2000">
-    <title>Lista de Transaciones</title>
+
+        <title>Lista de Transaciones</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -10,6 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <style>
         a{
         color:white;
@@ -21,7 +23,7 @@
         p{
             font-family: Arial;
             font-size: 16px;
-            color: black;
+            color: blue;
             font-weight: bold;
         }
     </style>
@@ -29,10 +31,10 @@
 <body>
 
 <div class="container">
-    <!--<p th:inline="text" class="text-right">Bienvenido: [[${#httpServletRequest.remoteUser}]]</p>-->
-    <p th:inline="text" class="text-right">Bienvenido: Pepito Perez</p>
-    <p th:inline="text" class="text-right">Rol Actual: Administador</p>
+
     <button type="button" class="btn btn-danger" style="float:right"><a th:href="@{/logout}">Cerrar Sesión</a></button>
+    <p th:inline="text" class="text-right">User: [[${#httpServletRequest.remoteUser}]]</p>
+
     <nav>
         <center>
             <img src="https://img.freepik.com/vector-gratis/hacker-que-opera-ilustracion-icono-historieta-ordenador-portatil-concepto-icono-tecnologia-aislado-estilo-dibujos-animados-plana_138676-2387.jpg?w=2000"
@@ -40,63 +42,62 @@
         </center>
     </nav>
 
-    <h3> Lista de Transaciones</h3>
+    <h1> Lista de Transacciones</h1>
     <!--Dibujamos la tabla-->
     <br><table class="table table-bordered">
-    <tr>
-        <th>ID</th>
-        <th class="text-right">Valor</th>
-        <th>Concepto</th>
-        <th>Empleado Responsable</th>
-        <th>Empresa Responsable</th>
-        <th>Fecha de Transacion</th>
-        <th>Editar</th>
-        <th>Eliminar</th>
-    </tr>
+        <tr>
+            <th>ID</th>
+            <th class="text-right">Valor</th>
+            <th>Concepto</th>
+            <th>Usuario Responsable</th>
+            <th>Fecha de la Transaccion</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+        </tr>
 
     <!--Llenamos la tabla dibujada-->
     <!--En nuestro controller, creamos en viewTransaction un modelo con un atributo llamado movlist donde esta guardada la lista de todos los movimientos-->
-    <tr th:each="Transaction : ${movlist}">
-        <td th:text="${Transaction.id}"></td>
-        <td class="text-right" th:text="${#numbers.formatCurrency(Transaction.amount)}">$1`200.000</td>
-        <td th:if="${Transaction.concept=='1'}">Papeleria</td>
-        <!--<td th:if="${Transaction.concept=='2'}">Servicios Publicos/privados</td>-->
-        <!--<td th:if="${Transaction.concept=='3'}">Operativos</td>-->
-        <!--<td th:if="${Transaction.concept=='4'}">Caja Menor</td>-->
-        <!--<td th:if="${Transaction.concept=='5'}">Tributario</td>-->
-        <!--<td th:if="${Transaction.concept=='6'}">Mobiliario</td>-->
-        <!--<td th:if="${Transaction.concept=='7'}">Maquinaria y Equipo</td>-->
-        <!--<td th:if="${Transaction.concept=='8'}">Nomina</td>-->
-        <td th:text="${Transaction.user.name}">Jabier Marquez</td>
-        <td th:text="${Transaction.enterprise.name}">Desarrollo S.A</td>
-        <td th:text="${#dates.format(Transaction.fecha, 'dd/MM/yyyy')}">05/15/2012</td>
-        <td><button type="button" class="btn btn-warning"><a th:href="@{/EditTransaction/{id}(id=${Transaction.id})}">Editar</a></button></td>
-        <td><button type="button" class="btn btn-danger"><a th:href="@{/DeleteTransaction/{id}(id=${Transaction.id})}">Eliminar</a></button></td>
-    </tr>
-</table>
+        <tr th:each="transaction : ${movlist}">
+            <td th:text="${transaction.id}"></td>
+            <td class="text-right" th:text="${#numbers.formatCurrency(transaction.amount)}"></td>
+            <td th:if="${transaction.concept=='1'}">Papeleria</td>
+            <td th:if="${transaction.concept=='2'}">Servicios Publicos/privados</td>
+            <td th:if="${transaction.concept=='3'}">Operativos</td>
+            <td th:if="${transaction.concept=='4'}">Caja Menor</td>
+            <td th:if="${transaction.concept=='5'}">Tributario</td>
+            <td th:if="${transaction.concept=='6'}">Mobiliario</td>
+            <td th:if="${transaction.concept=='7'}">Maquinaria y Equipo</td>
+            <td th:if="${transaction.concept=='8'}">Nomina</td>
+            <td th:text="${transaction.usuario}"></td>
+            <td th:text="${#dates.format(transaction.fecha, 'dd/MM/yyyy')}"></td>
+            <td><button type="button" class="btn btn-warning"><a th:href="@{/EditTransaction/{id}(id=${transaction.id})}">Editar</a></button></td>
+            <td><button type="button" class="btn btn-danger"><a th:href="@{/DeleteTransaction/{id}(id=${transaction.id})}">Eliminar</a></button></td>
+        </tr>
+    </table>
 
     <!-- CAMPO PARA EL AREA DE NAVEGACION -->
-    <!--<nav aria-label="Ejemplo navegacion">
+    <!--
+    <nav aria-label="Ejemplo navegacion">
         <ul class="pagination mt-4">
             <li th:class="${paginaActual==estado.index} ? 'active' : '' " th:each="pagina, estado: ${paginas}" class="page-item">
-                <a th:href="@{/VerMovimientos/(pagina=${estado.index})}" class="page-link" th:text="${estado.index}+1">Atras</a>
+                <a th:href="@{/ViewTransactions/(pagina=${estado.index})}" class="page-link" th:text="${estado.index}+1">Atras</a>
             </li>
         </ul>
-    </nav>-->
+    </nav>
+    -->
 
 
-
-    <!-- Campo para ver la suma de TODOS LOS TRASACIONES FILTRADOS -->
+    <!-- Campo para ver la suma de TODAS LAS TRANSACCIONES FILTRADOS -->
     <div class="row">
         <div class="form-group col-md-12">
-            <label class="col-md-3" for="SumaMontos">Total Transaciones:</label>
+            <label class="col-md-3" for="SumaMontos">Total Transacciones:</label>
             <div class="col-md-6">
                 <p th:text="${#numbers.formatCurrency(SumaMontos)}" class="form-control" id="SumaMontos"></p>
             </div>
         </div>
     </div>
 
-    <!-- vamos a crear un boton que sirva para agregar nuevos Transacion -->
+    <!-- vamos a crear un boton que sirva para agregar nuevas Transacciones -->
     <button type="button" class="btn btn-info"><a th:href="@{/AddTransaction}">Agregar Nueva Transacion</a></button>
     <br><br>
     <!-- boton que me lleva a la lista de empresas -->
@@ -111,16 +112,16 @@
 
         var msg= [[${mensaje}]];
         if (msg == "saveOK"){
-            Command : toastr["success"]("Movimiento registrado con éxito!")
+            Command : toastr["success"]("Transaccion registrada con éxito!")
             }
         else if (msg == "updateOK"){
-            Command : toastr["success"]("Movimiento actualizado con éxito!")
+            Command : toastr["success"]("Transaccion actualizada con éxito!")
         }
         else if (msg == "deleteOK"){
-            Command : toastr["error"]("Movimiento eliminado con éxito!")
+            Command : toastr["error"]("Transaccion eliminada con éxito!")
         }
         else if (msg == "deleteError"){
-            Command : toastr["error"]("Movimiento no pudo ser eliminado!")
+            Command : toastr["error"]("Transaccion no pudo ser eliminada!")
         }
         toastr.options={
             "positionClass": "toast-top-right",

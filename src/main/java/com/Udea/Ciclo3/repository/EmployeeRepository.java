@@ -16,5 +16,6 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
     public abstract ArrayList<Employee> findByEnterpriseId(Long enterpriseId);
     public abstract ArrayList<Employee> findByEnterprise(Long id);
 
+    Employee findByEmail(String email);
 }
 

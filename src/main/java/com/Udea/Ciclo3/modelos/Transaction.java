@@ -1,5 +1,7 @@
 package com.Udea.Ciclo3.modelos;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.persistence.Table;
 import java.util.Date;
@@ -11,31 +13,34 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.AUTO)
     //atributos
     private long Id;
-    private float amount;
+    private long amount;
     private String concept;
-    private Date updateAt;
-    private Date createdAt;
+
     @ManyToOne
-    private Employee user;
+    @JoinColumn(name = "employee_id")
+    private Employee usuario;
+
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date fecha;
     @ManyToOne
     private Enterprise enterprise;
+
+
+
+
     //constructor
 
     public Transaction() {
     }
 
-    public Transaction(long id, float amount, String concept, Date updateAt, Date createdAt, Employee user, Enterprise enterprise) {
-        Id = id;
+    public Transaction(long amount, String concept, Employee user, Date fecha) {
         this.amount = amount;
         this.concept = concept;
-        this.updateAt = updateAt;
-        this.createdAt = createdAt;
-        this.user = user;
-        this.enterprise = enterprise;
+        this.usuario = user;
+        this.fecha = fecha;
     }
 
-
-    //getters and setters
+//getters and setters
 
 
     public long getId() {
@@ -46,11 +51,11 @@ public class Transaction {
         Id = id;
     }
 
-    public float getAmount() {
+    public long getAmount() {
         return amount;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(long amount) {
         this.amount = amount;
     }
 
@@ -62,28 +67,12 @@ public class Transaction {
         this.concept = concept;
     }
 
-    public Date getUpdateAt() {
-        return updateAt;
+    public Employee getUsuario() {
+        return usuario;
     }
 
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Employee getUser() {
-        return user;
-    }
-
-    public void setUser(Employee user) {
-        this.user = user;
+    public void setUsuario(Employee usuario) {
+        this.usuario = usuario;
     }
 
     public Enterprise getEnterprise() {
@@ -92,5 +81,13 @@ public class Transaction {
 
     public void setEnterprise(Enterprise enterprise) {
         this.enterprise = enterprise;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 }

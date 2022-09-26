@@ -12,7 +12,6 @@ public class Employee {
     private Long id;
     private String name;
     private String email;
-    private Enum_RoleName rol;
     private String updateAt;
     private String createdAt;
 
@@ -26,6 +25,7 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "enterprise_id")
     private Enterprise enterprise;
+    private String rol;
     private String password;
 
     private Boolean estado;
@@ -34,14 +34,14 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String name, String email, Enum_RoleName rol, String updateAt, String createdAt, Transaction transactions, Enterprise enterprise, String password, boolean estado) {
-        this.name =name;
+    public Employee(String name, String email, String updateAt, String createdAt, Transaction transaction, Enterprise enterprise, String rol, String password, Boolean estado) {
+        this.name = name;
         this.email = email;
-        this.rol = rol;
         this.updateAt = updateAt;
         this.createdAt = createdAt;
         this.transaction = transaction;
         this.enterprise = enterprise;
+        this.rol = rol;
         this.password = password;
         this.estado = estado;
     }
@@ -70,14 +70,6 @@ public class Employee {
         this.email = email;
     }
 
-    public Enum_RoleName getRol() {
-        return rol;
-    }
-
-    public void setRol(Enum_RoleName rol) {
-        this.rol = rol;
-    }
-
     public String getUpdateAt() {
         return updateAt;
     }
@@ -94,20 +86,20 @@ public class Employee {
         this.createdAt = createdAt;
     }
 
-    public Enterprise getEnterprise() {
-        return enterprise;
-    }
-
-    public void setEnterprise(Enterprise enterprise) {
-        this.enterprise = enterprise;
-    }
-
     public Transaction getTransaction() {
         return transaction;
     }
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
+    }
+
+    public Enterprise getEnterprise() {
+        return enterprise;
+    }
+
+    public void setEnterprise(Enterprise enterprise) {
+        this.enterprise = enterprise;
     }
 
     public String getPassword() {
@@ -124,5 +116,13 @@ public class Employee {
 
     public void setEstado(Boolean estado) {
         this.estado = estado;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 }

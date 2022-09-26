@@ -60,4 +60,7 @@ public class EmployeeService {
     }
 
 
+    public Employee getEmployeebyEmail(String email) {
+        return employeeRepository.findByEmail(email);
+    }
 }

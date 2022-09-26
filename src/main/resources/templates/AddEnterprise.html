@@ -28,9 +28,9 @@
 
 <div class="container">
     <!--<p th:inline="text" class="text-right">Bienvenido: [[${#httpServletRequest.remoteUser}]]</p>-->
-    <p th:inline="text" class="text-right">Bienvenido: Pepito Perez</p>
-    <p th:inline="text" class="text-right">Rol Actual: Administador</p>
+
     <button type="button" class="btn btn-danger" style="float:right"><a th:href="@{/logout}">Cerrar Sesión</a></button>
+    <p th:inline="text" class="text-right">User: [[${#httpServletRequest.remoteUser}]]</p>
 
     <nav >
         <center>

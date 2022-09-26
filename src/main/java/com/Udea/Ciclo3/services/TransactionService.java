@@ -14,9 +14,9 @@ public class TransactionService {
     TransactionRepository transactionRepository;
     //1. metodo que muestra todas las transacciones
     public List<Transaction> getAllTransactions(){
-        List<Transaction> transactionsList = new ArrayList<>();
-        transactionRepository.findAll().forEach(transaction -> transactionsList.add(transaction));
-        return transactionsList;
+        List<Transaction> movimientosList= new ArrayList<>();
+        transactionRepository.findAll().forEach(transaction -> movimientosList.add(transaction));
+        return movimientosList;
     }
     //2. metodo que muestra todas las transacciones por id
     public Transaction getTransactionById(Long id){
@@ -25,9 +25,9 @@ public class TransactionService {
 
 
     //3. guardar o actualizar elementos
-    public boolean saveOrUpdateTransacion(Transaction transaction){
+    public boolean saveOrUpdateTransacion(Transaction transaction) {
         Transaction mov = transactionRepository.save(transaction);
-        if (transactionRepository.findById(mov.getId())!=null){
+        if (transactionRepository.findById(mov.getId()) != null) {
             return true;
         }
         return false;
@@ -46,14 +46,14 @@ public class TransactionService {
 
     //5. Obtener teniendo en cuenta el id del empleado
     public ArrayList<Transaction> getByEmployee(Long id){
-        return transactionRepository.findByEmployeeId(id);
+        return transactionRepository.findByEmployee(id);
     }
 
     //6.Obtener movimientos teniendo en cuenta el id de la empresa a la que pertenecen los empleados que la registraron
 
     public ArrayList<Transaction> getByEnterprise(Long id){
 
-        return transactionRepository.findByEnterpriseId(id);
+        return transactionRepository.findByEnterprise(id);
     }
 
     //7. servicio para ver la suma de todos los montos
@@ -77,9 +77,9 @@ public class TransactionService {
 
     //10. servicio para ver el id de un empleado si tenemos su correo
 
-    public Long IdPorCorreo(String Correo){
-        return transactionRepository.IdPorCorreo(Correo);
-    }
+    //public Integer IdPorCorreo(String email){
+      //  return transactionRepository.IdPorCorreo(email);
+   // }
 
 
 
