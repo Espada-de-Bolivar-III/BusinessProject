@@ -4,20 +4,35 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="445df6b8-9b5f-4597-aed7-94681de059b8" name="Changes" comment="Errores solucionados v2">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="445df6b8-9b5f-4597-aed7-94681de059b8" name="Changes" comment="Errores solucionados, templates elaboradas, desplegar en heroku y conectar templates, falta security y logueo">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/modelos/TransactionVM.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Udea/Ciclo3/Ciclo3Application.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Udea/Ciclo3/modelos/Employee.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Udea/Ciclo3/modelos/Enterprise.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Udea/Ciclo3/modelos/Enum_RoleName.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Udea/Ciclo3/modelos/Profile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/Udea/Ciclo3/modelos/Transaction.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/Udea/Ciclo3/Ciclo3ApplicationTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/Ciclo3Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/Ciclo3Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/controller/ControllerA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/controller/ControllerA.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/handler/CustomSuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/handler/CustomSuccessHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/modelos/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/modelos/Employee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/modelos/Enum_RoleName.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/modelos/Enum_RoleName.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/modelos/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/modelos/Transaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/repository/EmployeeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/repository/EmployeeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/repository/TransactionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/repository/TransactionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/security/SecConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/security/securityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/security/securityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/services/EmployeeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/services/EmployeeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/services/EnterpriseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/services/EnterpriseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/services/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Udea/Ciclo3/services/TransactionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/AddEmployee.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/AddEmployee.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/AddEnterprise.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/AddEnterprise.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/AddTransaction.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/AddTransaction.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/EditEmployee.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/EditEmployee.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/EditEnterprise.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/EditEnterprise.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/EditTransaction.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/EditTransaction.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/ViewEmployees.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/ViewEmployees.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/ViewEnterprises.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/ViewEnterprises.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/ViewTransactions.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/ViewTransactions.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Udea/Ciclo3/Ciclo3Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Udea/Ciclo3/Ciclo3Application.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Udea/Ciclo3/modelos/Employee.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Udea/Ciclo3/modelos/Employee.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/Udea/Ciclo3/modelos/Transaction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/Udea/Ciclo3/modelos/Transaction.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +43,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="HTML File" />
         <option value="Class" />
       </list>
     </option>
@@ -47,7 +63,7 @@
     </option>
   </component>
   <component name="ProjectId" id="2DpN0TuZ04AOJ7mXFSJkos84tIK" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+  <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -58,6 +74,7 @@
   &quot;keyToString&quot;: {
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
@@ -70,6 +87,11 @@
     &quot;spring.configuration.checksum&quot;: &quot;c0d52611686fe069f441ba2df2e254cb&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\livem\IdeaProjects\UDEA1\BusinessProject\src\main\resources\templates" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Ciclo3Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.Udea.Ciclo3.Ciclo3Application" />
@@ -132,7 +154,28 @@
       <option name="project" value="LOCAL" />
       <updated>1662688230004</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Errores solucionados y para presentar">
+      <created>1662785198783</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1662785198783</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Errores solucionados, security y elaborar templates html">
+      <created>1663641455122</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1663641455122</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Errores solucionados, templates elaboradas, desplegar en heroku y conectar templates, falta security y logueo">
+      <created>1663809347016</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1663809347017</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -154,10 +197,18 @@
     <MESSAGE value="Repository, Services and Controllers" />
     <MESSAGE value="Errores solucionados" />
     <MESSAGE value="Errores solucionados v2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Errores solucionados v2" />
+    <MESSAGE value="Errores solucionados y para presentar" />
+    <MESSAGE value="Errores solucionados, security y elaborar templates html" />
+    <MESSAGE value="Errores solucionados, templates elaboradas, desplegar en heroku y conectar templates, falta security y logueo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Errores solucionados, templates elaboradas, desplegar en heroku y conectar templates, falta security y logueo" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/BusinessProject$Ciclo3Application.ic" NAME="Ciclo3Application Coverage Results" MODIFIED="1664013659558" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.Udea.Ciclo3.*</FILTER>
+    </SUITE>
   </component>
 </project>
