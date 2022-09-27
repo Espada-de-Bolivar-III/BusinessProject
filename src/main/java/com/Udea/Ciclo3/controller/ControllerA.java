@@ -38,7 +38,7 @@ public class ControllerA {
     ProfileService profileService;
     @Autowired
     EmployeeService employeeService;
-
+    private Long id;
 
 
     //EMPRESAS
@@ -187,34 +187,60 @@ public class ControllerA {
     public String VerTransacciones(//@RequestParam(value = "pagina", required = false, defaultValue = "1") int NumeroPagina,
                                    //@RequestParam(value = "medida", required = false, defaultValue = "5") int medida,
                                    Model model, @ModelAttribute("mensaje") String mensaje) {
-        List<Transaction> listaMovimientos= transactionService.getAllTransactions(); //Page<Transaction> paginaMovimientos = transactionRepository.findAll(PageRequest.of(NumeroPagina, medida));
+        List<Transaction> listaMovimientos = transactionService.getAllTransactions(); //Page<Transaction> paginaMovimientos = transactionRepository.findAll(PageRequest.of(NumeroPagina, medida));
         model.addAttribute("movlist", listaMovimientos);
         model.addAttribute("mensaje", mensaje);
         //Long sumaMonto = transactionService.MontosPorEmpleado(transactionService.MontosPorEmpleado(long id));
         //System.out.println("Sumas empleado******* " + sumaMonto);
-        //model.addAttribute("SumaMontos", sumaMonto);
-        Long sumaMonto = transactionService.ObtenerSumaMontos();
+        Long sumaMonto = null;
+        model.addAttribute("SumaMontos", sumaMonto);
+        sumaMonto = transactionService.ObtenerSumaMontos();
         model.addAttribute("sumaMontos", sumaMonto);//mandamos la suma de montos a la plantilla
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //conseguir el correo para alimentar user
+        String email = auth.getName();
+        Employee employee = employeeService.getEmployeebyEmail(email);
+        model.addAttribute("id",employee.getId());
+        model.addAttribute("identificadorEmployee",employee.getId().toString());
         return "ViewTransactions";//llamamos al HTML
     }
-
-
-
-    @GetMapping("/AddTransaction")//controlador que nos lleva al template donde podremos crear un nuevo movimiento
-    public String NuevaTransaccion(Model model, @ModelAttribute("mensaje") String mensaje) {
+// Add transaction by employee
+    @GetMapping("/AddTransaction/{id}/Transaction")//controlador que nos lleva al template donde podremos crear un nuevo movimiento
+    public String NuevaTransaccionEmpleado(@PathVariable("id") Long id,Model model, @ModelAttribute("mensaje") String mensaje) {
         Transaction movimiento = new Transaction();
         model.addAttribute("mov", movimiento);
         model.addAttribute("mensaje", mensaje);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //conseguir el correo para alimentar user
         String email = auth.getName();
+        Employee employee = employeeService.getEmployeebyEmail(email);
+        model.addAttribute("id",employee.getId());
         //Integer idEmployee = transactionService.IdPorCorreo(email);
         //model.addAttribute("idEmployee", idEmployee);
         return "AddTransaction";//llamar al HTML
     }
 
+    @PostMapping("/Employee/{id}/Transaction")
+    public String GuardarTransaccionEmpleado(@PathVariable("id") Long id,TransactionVM mov, RedirectAttributes redirectAttributes, Model model) {
+        // mappear TransactionVM a Transaction
+        Transaction transaction = new Transaction();
+        transaction.setAmount(mov.getAmount());
+        transaction.setConcept(mov.getConcept());
+        transaction.setFecha(mov.getFecha());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //conseguir el correo para alimentar user
+        String email = auth.getName();
+        Employee employee = employeeService.getEmployeebyEmail(email);
+        transaction.setUsuario(employee);
+        transaction.setEnterprise(employee.getEnterprise());
+
+        if (transactionService.saveOrUpdateTransacion(transaction)) {
+            redirectAttributes.addFlashAttribute("mensaje", "saveOK");
+            return "redirect:/Employee/"+employee.getId()+"/Transaction";
+        }
+        redirectAttributes.addFlashAttribute("mensaje", "saveError");
+        return "redirect:/AddTransaction/"+employee.getId()+"/Transaction";
+    }
 
     @PostMapping("/SaveTransaction")
-    public String GuardarTransaccion(TransactionVM mov, RedirectAttributes redirectAttributes) {
+    public String GuardarTransaccion(TransactionVM mov, RedirectAttributes redirectAttributes, Model model) {
         // mappear TransactionVM a Transaction
         Transaction transaction = new Transaction();
         transaction.setAmount(mov.getAmount());
@@ -234,28 +260,59 @@ public class ControllerA {
         return "redirect:/AddTransaction";
     }
 
-    @GetMapping("/EditTransaction/{id}")
-    public String EditarTransaccion(Model model, @PathVariable Long id, @ModelAttribute("mensaje") String mensaje) {
+    @GetMapping("/EditTransaction/{id}/Employee/{employeeId}")
+    public String editarMovimento(Model model, @PathVariable Long id,@PathVariable Long employeeId, @ModelAttribute("mensaje") String mensaje) {
         Transaction mov = transactionService.getTransactionById(id);
-        //creamos un atributo para el modelo, que se llame igualmente empl y es el que ira al html para llenar o alimentar campos
+        Optional<Employee> emp = employeeService.getEmployeebyId(employeeId);
+        //Creamos un atributo para el modelo, que se llame igualmente empl y es el que ira al html para llenar o alimentar campos
         model.addAttribute("mov", mov);
         model.addAttribute("mensaje", mensaje);
+        if(emp.isPresent()){
+            model.addAttribute("usuario", emp.get());
+        }
         List<Employee> listaEmpleados = employeeService.getAllEmployee();
-        model.addAttribute("emplelist", listaEmpleados);
+        //model.addAttribute("emplelist", listaEmpleados);//??????????????????
         return "EditTransaction";
+    }
+
+    @PostMapping("/ToUpdateTransaction/{id}/Employee/{employeeId}")
+    public String ActualizarTransaccionEmpleado(@PathVariable Long id,@PathVariable Long employeeId,@ModelAttribute("mov") TransactionVM mov, RedirectAttributes redirectAttributes) {
+
+        Transaction transaction = new Transaction();
+        transaction.setId(mov.getId());
+        transaction.setAmount(mov.getAmount());
+        transaction.setConcept(mov.getConcept());
+        transaction.setFecha(mov.getFecha());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //conseguir el correo para alimentar user
+        String email = auth.getName();
+        Employee employee = employeeService.getEmployeebyEmail(email);
+        transaction.setUsuario(employee);
+        transaction.setEnterprise(employee.getEnterprise());
+        //Luego si va esto
+        if (transactionService.saveOrUpdateTransacion(transaction)) {
+            redirectAttributes.addFlashAttribute("mensaje", "updateOK");
+            return "redirect:/Employee/"+employeeId + "/Transaction";
+        }
+        redirectAttributes.addFlashAttribute("mensaje", "updateError");
+        return "redirect:/EditTransaction/"+id+"/Employee/" + employeeId;
 
 
     }
-
     @PostMapping("/ToUpdateTransaction")
-    public String ActualizarTransaccion(@ModelAttribute("mov") Transaction mov, RedirectAttributes redirectAttributes) {
-        // Cambiar Transaction por TransacionVM
-        // Buscar usuario y setear a transacion usuario y empresa
-        // Copiarse del codigo de crear transaccion.
-        // Revisar el template de Edit transaccion, que se parezca a lo de crear transaccion
+    public String ActualizarTransaccion(@ModelAttribute("mov") TransactionVM mov, RedirectAttributes redirectAttributes) {
 
+        Transaction transaction = new Transaction();
+        transaction.setId(mov.getId());
+        transaction.setAmount(mov.getAmount());
+        transaction.setConcept(mov.getConcept());
+        transaction.setFecha(mov.getFecha());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //conseguir el correo para alimentar user
+        String email = auth.getName();
+        Employee employee = employeeService.getEmployeebyEmail(email);
+        transaction.setUsuario(employee);
+        transaction.setEnterprise(employee.getEnterprise());
         //Luego si va esto
-        if (transactionService.saveOrUpdateTransacion(mov)) {
+        if (transactionService.saveOrUpdateTransacion(transaction)) {
             redirectAttributes.addFlashAttribute("mensaje", "updateOK");
             return "redirect:/ViewTransactions";
         }
@@ -264,7 +321,21 @@ public class ControllerA {
 
 
     }
+    @GetMapping("/DeleteTransaction/{id}/Employee/{employeeId}")
+    public String BorrarTransaccionEmpleado(@PathVariable Long id,@PathVariable Long employeeId, RedirectAttributes redirectAttributes) {
+        Long idusuario = employeeId;
+        if (transactionService.deleteTransaction(id)) {
+            Optional<Employee> emp = employeeService.getEmployeebyId(employeeId);
 
+            if(emp.isPresent()){
+                idusuario = emp.get().getId();
+            }
+            redirectAttributes.addFlashAttribute("mensaje", "deleteOK");
+            return "redirect:/Employee/"+idusuario + "/Transaction";
+        }
+        redirectAttributes.addFlashAttribute("mensaje", "deleteError");
+        return "redirect:/Employee/"+idusuario + "/Transaction";
+    }
     @GetMapping("/DeleteTransaction/{id}")
     public String BorrarTransaccion(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         if (transactionService.deleteTransaction(id)) {
@@ -349,13 +420,14 @@ public class ControllerA {
         return profileService.getByEnterprise(id);
     }
 
+
     //Metodo para encriptar contraseñas en spring boot mediante paswordEncoder
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-}
 
+}
 
 
 

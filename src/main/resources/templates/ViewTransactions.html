@@ -68,10 +68,10 @@
             <td th:if="${transaction.concept=='6'}">Mobiliario</td>
             <td th:if="${transaction.concept=='7'}">Maquinaria y Equipo</td>
             <td th:if="${transaction.concept=='8'}">Nomina</td>
-            <td th:text="${transaction.usuario}"></td>
+            <td th:text="${transaction.usuario.email}"></td>
             <td th:text="${#dates.format(transaction.fecha, 'dd/MM/yyyy')}"></td>
-            <td><button type="button" class="btn btn-warning"><a th:href="@{/EditTransaction/{id}(id=${transaction.id})}">Editar</a></button></td>
-            <td><button type="button" class="btn btn-danger"><a th:href="@{/DeleteTransaction/{id}(id=${transaction.id})}">Eliminar</a></button></td>
+            <td><button type="button" class="btn btn-warning"><a th:href="@{/EditTransaction/{id}/Employee/{employeeId}(id=${transaction.id},employeeId=${id})}">Editar</a></button></td>
+            <td><button type="button" class="btn btn-danger"><a th:href="@{/DeleteTransaction/{id}/Employee/{employeeId}(id=${transaction.id},employeeId=${id})}">Eliminar</a></button></td>
         </tr>
     </table>
 
@@ -88,6 +88,7 @@
 
 
     <!-- Campo para ver la suma de TODAS LAS TRANSACCIONES FILTRADOS -->
+
     <div class="row">
         <div class="form-group col-md-12">
             <label class="col-md-3" for="SumaMontos">Total Transacciones:</label>
@@ -97,8 +98,9 @@
         </div>
     </div>
 
+
     <!-- vamos a crear un boton que sirva para agregar nuevas Transacciones -->
-    <button type="button" class="btn btn-info"><a th:href="@{/AddTransaction}">Agregar Nueva Transacion</a></button>
+    <button type="button" class="btn btn-info"><a th:href="@{/AddTransaction/{id}/Transaction(id=${id})}">Agregar Nueva Transacion</a></button>
     <br><br>
     <!-- boton que me lleva a la lista de empresas -->
     <button type="button" class="btn btn-primary"><a th:href="@{/ViewEnterprises}">Ver lista de Empresas</a></button>

@@ -6,13 +6,15 @@ import java.util.Date;
 
 public class TransactionVM {
 
+    private long id;
     private long amount;
     private String concept;
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date fecha;
 
-    public TransactionVM(long amount, String concept, Date fecha) {
+    public TransactionVM(long id,long amount, String concept, Date fecha) {
+        this.id = id;
         this.amount = amount;
         this.concept = concept;
 
@@ -20,6 +22,14 @@ public class TransactionVM {
     }
     public TransactionVM() {
 
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getAmount() {

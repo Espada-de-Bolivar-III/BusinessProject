@@ -38,7 +38,7 @@
     <h1> Modifique aqui los datos de la transaccion</h1>
     <br>
     <!--Crear formulario para llenar los datos del movimiento y guardarlo en el objeto mov -->
-    <form th:action="@{/SaveTransaction}" th:object="${mov}" method="post">
+    <form th:action="@{/Employee/{id}/Transaction(id=${id})}" th:object="${mov}" method="post">
         <!--Campo para Concepto-->
         <div class="row">
             <div class="form-group col-md-12">

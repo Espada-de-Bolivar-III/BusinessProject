@@ -36,7 +36,7 @@
     <h1> Modifique datos de la Transaccion</h1>
     <br>
     <!--Crear formulario para cambiar los datos de la transacion y guardarlo en el objeto mov -->
-    <form th:action="@{/ToUpdateTransaction}" th:object="${mov}" method="post">
+    <form th:action="@{/ToUpdateTransaction/{id}/Employee/{employeeId}(id=${mov.id},employeeId=${usuario.id})}" th:object="${mov}" method="post">
         <!--Campo para id-->
         <div class="row">
             <div class="form-group col-md-12">
@@ -78,7 +78,7 @@
         <!--Campo para usuario-->
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3" for="usuario">Responsable del movimiento:</label>
+                <label class="col-md-3" for="usuario">Empleado responsable:</label>
                 <div class="col-md-6">
                     <select th:field="*{usuario}" class="form-control" id="usuario" required="required" readonly >
                         <!--<option th:value="*{usuario.id} th:text=*{usuario.email}"></option>-->
@@ -88,6 +88,7 @@
                 </div>
             </div>
         </div>
+
 
         <!--Campo para fecha-->
         <div class="row">
@@ -105,6 +106,7 @@
         </div>
 
     </form>
+
 
     <br>
     <a href="javascript: history.go(-1)" class="btn btn-info" role="button">Atrás</a>
